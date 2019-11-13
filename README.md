@@ -24,7 +24,6 @@ const store = configureStore();
 
 * `yourInitialState` - any initial state for any extra reducers you may have (set to `{}` if none)
 * `yourAppReducers` - any reducers from your app (set to `{}` if none)
-* `yourOfflineOptions` - any offline options, specified using [this redux-offline configuration object](https://github.com/jevakallio/redux-offline#configuration-object)
 
 ### Web Client Usage
 
