@@ -23,9 +23,12 @@ function channelListToSet(state: any, action: GenericAction) {
     }
 
     action.data.forEach((channel: Channel) => {
-        const nextSet = new Set(nextState[channel.team_id]);
-        nextSet.add(channel.id);
-        nextState[channel.team_id] = nextSet;
+        const set = nextState[channel.team_id];
+        if (Object.keys(set).length !== 0) {
+            const nextSet = new Set(nextState[channel.team_id]);
+            nextSet.add(channel.id);
+            nextState[channel.team_id] = nextSet;
+        }
     });
 
     return nextState;
