@@ -12,23 +12,11 @@ import {Channel} from 'types/channels';
 
 function profilesToSet(state: RelationOneToMany<Team, UserProfile>, action: GenericAction) {
     const id = action.id;
-    const nextSet = new Set(state[id]);
-    Object.keys(action.data).forEach((key) => {
-        nextSet.add(key);
-    });
-
-    return {
-        ...state,
-        [id]: nextSet,
-    };
-}
-
-function profileListToSet(state: RelationOneToMany<Team, UserProfile>, action: GenericAction, replace = false) {
-    const id = action.id;
-    const nextSet = replace ? new Set() : new Set(state[id]);
-    if (action.data) {
-        action.data.forEach((profile: UserProfile) => {
-            nextSet.add(profile.id);
+    const list = state[id];
+    if (Boolean(list) && Object.keys(list).length !== 0) {
+        const nextSet = new Set();
+        Object.keys(action.data).forEach((key) => {
+            nextSet.add(key);
         });
 
         return {
@@ -36,7 +24,25 @@ function profileListToSet(state: RelationOneToMany<Team, UserProfile>, action: G
             [id]: nextSet,
         };
     }
+    return state;
+}
 
+function profileListToSet(state: RelationOneToMany<Team, UserProfile>, action: GenericAction, replace = false) {
+    const id = action.id;
+    const list = state[id];
+    if (Boolean(list) && Object.keys(list).length !== 0) {
+        const nextSet = replace ? new Set() : new Set(list);
+        if (action.data) {
+            action.data.forEach((profile: UserProfile) => {
+                nextSet.add(profile.id);
+            });
+
+            return {
+                ...state,
+                [id]: nextSet,
+            };
+        }
+    }
     return state;
 }
 
