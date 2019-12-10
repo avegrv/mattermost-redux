@@ -26,7 +26,6 @@ import {SyncablePatch} from 'types/groups';
 
 const FormData = require('form-data');
 const HEADER_AUTH = 'Authorization';
-const HEADER_BEARER = 'BEARER';
 const HEADER_REQUESTED_WITH = 'X-Requested-With';
 const HEADER_USER_AGENT = 'User-Agent';
 const HEADER_X_CLUSTER_ID = 'X-Cluster-Id';
@@ -315,7 +314,7 @@ export default class Client4 {
         };
 
         if (this.token) {
-            headers[HEADER_AUTH] = `${HEADER_BEARER} ${this.token}`;
+            headers[HEADER_AUTH] = this.token;
         }
 
         const csrfToken = this.csrf || this.getCSRFFromCookie();
